@@ -1,0 +1,450 @@
+traffic manegment:
+spike arrest and quota 
+security :
+extention :javascript
+mediation:Transformaion
+
+Types of api :
+ 1.web api
+ 2.Internal api
+ 3.composite api 
+ 4.partner api
+
+authorization:apikey ,ouath 
+authentication :basic authentication  
+
+100:continue
+101:switching protocol 
+
+200:success
+201:created
+202:accepted 
+204:successful but no content
+
+300:redirection
+
+400:bad request
+401:unauthorized :Invalid OAuth AccessToken ,Invalid Apikey
+403:forbidden  :Threat Protection Error ,Invalid IP
+404:not found
+405:method not allowed 
+429:to many request
+413:payload to large 
+
+
+500:internal server error
+501:not implemented 
+503 :Service Unavailable 
+502:bad gateway
+504:gateway timeout
+
+inboud : onpremises
+outboud: 
+
+caching: to store the frequently accesss data in temp location to reduce latency  that is reusable we use caching policy .
+        Caching is the ability to store copies of frequently accessed data in several places along the request-response path.
+
+diffrence between ouath2.0 and jwt ?
+  ->ouath2.0  is framework and jwt is token 
+  
+jwt: we want access a client resource by 3rd part application without useing client credential for that we use a token a jwt token is a spectial type of token 
+     which can carry information internally inside the token as well as we can able to validate payload it is coming from authenticated source or not we can able
+     to sign payload with secrate.
+
+    1 . when a end user want to login 3rd party application  a3 rd party application register theair self with authorization/authetication server 
+        an share the client key and client secrate 
+    2. client store this key and secrate and share it to authorizaton server than api call send to the rsource backend server through apigee
+    3. when it is valid credential and come to authorization server apigee genrate jwt token which is a sign token with secrate key 
+    4. this token send back to 3rd party application 
+    5. then 3rd party application showa genrated token to apigee server apigee server verify this tokn with sign secrate it gives access to backen services .
+    6. and response will send back to client 
+ store the client information in cookies and store it in json format 
+
+    jwt: compat way to securly transfer information between client api 
+      it has a 3 part : 
+    header:type of token,algoritham to (genrate signature : use sha256,rsa,pkcs1 padding ),
+    payload : contain actual information of user 
+    signature :   create a secrate by calculatiing header ,payload and create a secrate signature 
+
+Flowhook: Flowhook is used to attach a shared flow in specific point of exicuting path in all apinproxy which is lies in the same envoirment .
+
+      Types of flowhook:
+                         1.preproxy :exicute before request go to the 
+                         2.postproxy
+                         3.posttarget
+                         4.pretarget
+
+servicecallout : service callout allow us to call an external service from an api proxy  it could be external or internal . 
+                 it is call using flow callout policy
+
+               http: Is used to call external service 
+
+               proxy.chaining :Its an Mp to Mp api ,suppose we call external service and we call it ,a call is go outside of
+                               the n/w and agin entre to the apidgee edge and go to the
+                               service it may cause of latency for that we use proxy.chaining so api call not going outside n/w and help to reduce latency . 
+ 
+default rule : it act as an exceptional handler for any error, that is not handle by any faultrule.if the condition for all faultrule does not 
+   match it exeicuted.
+
+faultRule:it is an customize error get executed as per the condition .
+
+sharesflow: combination of policy and resources into sharedflow .that we can consume it from multiple proxies lies in same envoirment.
+
+flowcallout:flowcallout is used to call a shered flow from api proxy or either another shared flow .
+
+kvm : key value mapping where  we store and retrive the data ,kvm is an secure area for key and value pair an api proxies consume that key and value from kvm
+ .in kvm key-value stored in encripted form .
+
+  mappIdentfier kvm : to give the name of a kvm .
+
+apikey: in apigee edge apiproduct is the way we expose the api to consumeing devlope.the only required setting for a Verify API Key policy is the 
+          expected location of the API key in the client request. The API proxy will check the location that you specify, and extract the API key. 
+
+assign message:it is used to change or create request and response msg during the api proxy flow .
+                add,copy,remove,set 
+
+ouath: ouath is used to access the client resource  by 3rd  party application without using a credentials for perticular time period we used ouath .
+   
+      grant types :
+                        client credential :
+                             client_id: a cliend is an public identifier even it is an public identifier it is not guesable by 3rd parties . 
+                             client secrate:The client secret is a secret known only to the application and the authorization server.
+                        authorization code 
+                        implicit grant type 
+                        resource owner -password grant type.
+
+quota: To set a limit an end user request to acces the resource for perticular time frame we use quota .
+       it comes under the business requirment.
+       quota is basically for individual user .
+       it is for a frontend 
+       it control the overall uses 
+      
+
+spike arrest : spike arrest is used to avoid the sudden brust of request traffic it may cause to overwhelmed the backend service to avoid this we go for 
+               spike arrest  it set up the time rule for each request .
+               It commes under the technical requirment .
+               spike arrest is for all user .
+               it is for backend 
+               it control sudden brust of traffic
+
+Extract variable:Extract variable is used to extract the content from request and response and add variable to that content .
+
+Message logging : it is used to keeping a record or log which is related to a request and response that flow through a api proxies 
+                   it is used for debugging,monitoring and analyzing .
+
+caching : it is used to store a frequently used data for some amount of time .
+
+Default Route Rule: Specifies the target server for unmatched requests.
+
+Multiple Route Rules: Allow routing to different target servers based on conditions (e.g., request path, method).
+
+openspec:OpenSpec is an documents to create API proxies with pre-configured policies.
+
+What is Target Servers?
+a "target server" refers to API endpoint connects to the backend service or resource.
+It allows defining different URLs for various environments (dev, test, production) without modifying the API code itself.
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.what we ask a client to build an new  api ?
+->request response packet , backend URL ,Securities,header .
+
+2.Maximum payload Size ?
+->bydefualt 10mb but we can increase it using streaming 
+
+3.what was the next stage after building an api proxy ?
+-> configure the bunch of proxy with an product and then we configure the product with app after that we prepare a documentation .
+   in documentation we have request and response packet and backend URL .
+
+4.ssl and tls ?
+ ssl:server send a digital sign signature 
+ Tls : tcp handshake,certificate check,key exchange and Data transmission 
+
+->Secure Sockets Layer (SSL) certificates, sometimes called digital certificates, are used to establish an encrypted connection between a browser or user’s 
+computer and a server or website.
+ 
+5.connection timeout :backend not response 
+6.IO timeout : connection establish but not getting response .
+
+7.xml thread protection ?
+maximum node length
+maximum attribute count
+maximum chield count 
+maximum text length 
+maximum attribute length
+Limits the maximum depth
+request allow to post large data or dummy data which cause memory consumtion on server and crash the server to avoid this we use xml thread protection .
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+types of api :
+
+ web api:
+ internal api 
+ composite api 
+ partner api :combine a multiple api in single entity 
+
+asymmetric Encription : uses a public key for encryption and use private key for decryption
+RSA-4096 bits 
+DSA:digital signature algorithm -512bits   
+
+symmetric Encryption : uses a secrate key for encryption and decryption .
+AES:Advance Encryption Standard 256bits
+DES:Digital Encryption Standard 56bits
+
+Thread protectiom :
+json thread protection:when someone try to send a large payload and want to crash the backend system we use json thread protection. 
+ArrayElementCount,
+ContainerDepth,
+ObjectEntryCount,
+ObjectEntryNameLength
+
+xml thread protection :request allow to post large data or dummy data which cause memory consumtion on server and crash the server to avoid 
+this we use xml thread protection .
+maximum  node length
+maximum attribute count
+maximum chield count 
+maximum text length 
+maximum attribute length
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Raise fault :Generates a custom message in response to an error condition.
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+SOA :service oriented Architecture 
+OBP :open banking platform
+quota:
+
+simple:
+<Quota async="false" continueOnError="false" enabled="true" name="Quota-1">
+    <DisplayName>Quota-1</DisplayName>
+    <Properties/>
+    <Allow count="1"/>
+    <Interval>1</Interval>
+    <Distributed>true</Distributed>
+    <Synchronous>true</Synchronous>
+    <TimeUnit>minute</TimeUnit>
+</Quota>
+
+using Quearyparam: allow to set a quota for multiple user
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Quota async="false" continueOnError="false" enabled="true" name="Quota-queryparam">
+    <DisplayName>Quota-queryparam</DisplayName>
+    <Properties/>
+    <Allow count="2"/>
+    <Interval>1</Interval>
+    <Distributed>true</Distributed>
+    <Synchronous>true</Synchronous>
+    <TimeUnit>minute</TimeUnit>
+    <Identifier ref="request.queryparam.appdev"/>
+</Quota>
+
+message weight :divede the quota for verb(methods)
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Quota async="false" continueOnError="false" enabled="true" name="Quotajs">
+    <DisplayName>Quotajs</DisplayName>
+    <Properties/>
+    <Allow count="3"/>
+    <Interval>1</Interval>
+    <Distributed>true</Distributed>
+    <Synchronous>true</Synchronous>
+    <TimeUnit>minute</TimeUnit>
+    <MessageWeight ref="messageWeight"/>
+</Quota>
+
+js:
+ var verb =context.getVariable("request.verb");
+ 
+ if(verb =="POST")
+ {
+   context.setVariable("messageWeight","2");  
+ }
+ else if(verb=="GET")
+ {
+      context.setVariable("messageWeight","1");
+ }
+
+rolling back Quota :
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Quota async="false" continueOnError="false" enabled="true" name="Quotarollback" type="rollingwindow">
+    <DisplayName>Quotarollback</DisplayName>
+    <Properties/>
+    <Allow count="2"/>
+    <Interval>1</Interval>
+    <Distributed>true</Distributed>
+    <Synchronous>true</Synchronous>
+    <TimeUnit>hour</TimeUnit>
+</Quota>
+
+count-type:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Quota async="false" continueOnError="false" enabled="true" name="Quotaflexi">
+    <DisplayName>Quotaflexi</DisplayName>
+    <Properties/>
+  
+    <Interval>1</Interval>
+    <Distributed>true</Distributed>
+    <Synchronous>true</Synchronous>
+    <TimeUnit>minute</TimeUnit>
+    <Allow>
+        <Class ref="request.queryparam.appteam">
+            <Allow class="partner" count="4"/>
+            <Allow class="public" count="1"/>
+        </Class>
+    </Allow>
+</Quota>
+-------------------------------------------------------------------------------------------------------------------------
+flow : 
+autorization/authentication 
+rate limmiting :To maintain performance and avlablity and reduce a latency
+                time for client app we use rate limiting .
+                So for that we make sure that app don’t consume more resource
+                than permitted.  
+
+So for that we make sure that app don’t consume more resource
+than permitted .
+security
+transformation
+routing 
+error handling : Error handling is a process of devlopment which helps to monitor and recover the error 
+                 Error handler detect each phase of error .and reporting it to user and making a
+                 recovery strategy for handling Error.
+---------------------------------------------------------------------------------------------------------------------------
+complience api : we follow the RBI guidlines 
+non-complience api
+
+1.customize Error Response:
+2.Applay rate limit : rate limmiting 
+3.Allow access to ip address : validation 
+4.otk require oauth 2.0 token: authorization 
+5.protect Against json document structure threats :security 
+6.validate json schema :security
+7.json to xml and xml to json transformation :transformation
+8.Encode/decode data :security 
+9.symmetric / assymetric encryption :secucrity 
+10.Route via Https to https: routing 
+11.add audit and details : logs 
+----------------------------------------------------------------------------------------------------------------------------------
+Product	Where                   hosted
+Apigee Edge for Public Cloud	Apigee's cloud
+Apigee Edge for Private Cloud	The customer's private data center.
+Apigee X	                Google Cloud
+Apigee hybrid	                Both Google Cloud and the customer's private data center
+
+We are using hybrid encryption method logic which is combination of RSA and AES algorithm which also known as strong cipher method.
+symmetric AES
+asymmetric Rsa
+Below are the steps need to follow for encryption.
+
+1. Generate 16 digit random number. Say RANDOMNO1.
+
+2. Encrypt RANDOMNO1 using RSA/ECB/PKCS1Padding and ICICI Public Key.
+
+3. Encode the output of step 2 using Base64. Say ENCR_KEY.
+
+4. Generate another 16 digit random number. Say RANDOMNO2.
+
+5. Concatenate RANDOMNO2 and data in JSON format. Say DATA.
+
+· DATA = RANDOMNO2 + data in JSON format
+
+6. Perform AES/CBC/PKCS5Padding encryption on DATA using RANDOMNO1 as key and RANDOMNO2 as IV.
+
+7. Encode the output of step 6 using Base64. Say ENCR_DATA.
+-------------------------------------------------------------------------------------------------------------------------------------------
+payment ,kyc  :
+  inbound :client -------> load balancer ------>api gateway------> soa or obp 
+ outbound : soa or obp ------> api gateway ------> load balancer ------>client 
+
+high level :authorization & authentication,ouath,api key,transformation
+medium :ouath,api key,transformation
+low : api key
+------------------------------------------------------------------------------------------------------------------------------------------
+second max salary :
+
+SELECT MAX(salary) AS second_highest_salary
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+
+using order by :
+   SELECT MAX(salary) AS second_highest_salary
+   FROM employees
+   WHERE salary < (SELECT MAX(salary) FROM employees)
+   ORDER BY salary DESC
+   LIMIT 1;
+
+to find error : 
+SELECT COUNT(*) AS error_count
+
+FROM your_table_name
+WHERE error_column = 'specific_error';
+     
+monitoring tool :apnomic
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Container depth : The depth of nested structures
+                  {
+  "person": {
+    "name": "John",
+    "address": {
+      "city": "New York",
+      "zip": "10001"
+    }
+  }
+}
+STRUCTURE VALIDATE (JSON TP)
+REQUIRE PARAMETRE CHECK(PATTERN)SCHEMA VALIDATION
+
+Object Entry Count: key-value pairs within a JSON object.
+{
+  "name": "Alice",
+  "age": 30,
+  "city": "London"
+}
+
+Array Entry Count: number of elements within a JSON array.
+
+ ["apple", "banana", "orange"]
+
+Entry Name Length:The length of the keys (names) in a JSON object.
+
+{
+  "short": "value",
+  "mediumLength": "another value",
+  "veryLongKeyName": "yet another value"
+}
+String Value Length:
+
+Definition: The length of the string values within a JSON object or array.
+{
+  "name": "John",
+  "description": "A person with a long description of about 50 characters."
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Weblogic : weblogic is used to build ,deploy , and run the enterprises application such as java for an on primises or in the cloud .
+
+
+features :
+  java EE compablity 
+  high avlablity and clustring 
+  security 
+  Web Services:WebLogic Server supports the development and deployment of web services .   
+
+  Master to master replication 
+  SHOW SLAVE STATUS\G.     
+
+caching:
+populate :genrate 
+lookup:get
+invalid : delete 
+response : store response 
+
+
+interchange  shuffle data packet iv use    
+
+
+
+private.use
+tls version 1.3
+verifyapikey.Verify-API-Key-1.a

@@ -1,0 +1,17 @@
+
+
+To push a file in Git Follow the following command :
+
+> Git status 
+> git add -A
+> git commit -m "nodejs project"
+> git push -u origin main
+
+
+
+To Push a file in dockerhub 
+>Docker Login
+>docker push <image name>
+
+
+
